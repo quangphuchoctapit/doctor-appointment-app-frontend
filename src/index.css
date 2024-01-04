@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-responsive-modal-modal {
+    min-width: 80%;
+}
