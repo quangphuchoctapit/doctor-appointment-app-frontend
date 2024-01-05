@@ -11,7 +11,6 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const handleSignup = async () => {
-        console.log("check :", username, email, password)
         let reponseServer = await registerNewUser(username, email, password)
         let response = reponseServer.data
         if (response && response.EC === 0) {

@@ -4,8 +4,10 @@ import { getDoctorInfo } from '../../service/userService.js'
 import Nav from '../Nav.jsx'
 import { PiUsersThree } from "react-icons/pi";
 import { FaMedal, FaStar } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 const DetailDoctor = () => {
+    // const user = useSelector(state => state.user.value)
     const { id } = useParams()
     const [doctorId, setDoctorId] = useState('')
     const [doctorInfo, setDoctorInfo] = useState([])
@@ -22,7 +24,7 @@ const DetailDoctor = () => {
         }
         fetchDoctorInfo(doctorId)
     }, [doctorId])
-    // console.log('check cocter infor', doctorInfo)
+    console.log('check doctor:', doctorInfo)
     return (
         <div>
             <Nav />
@@ -30,15 +32,15 @@ const DetailDoctor = () => {
                 <div className="flex flex-col gap-5 mx-auto w-full">
                     <div className="my-6 p-3 flex flex-col justify-center items-center mx-3">
                         <div className="flex sm:hidden flex-col gap-2 items-center justify-center">
-                            <div className="w-[120px] h-[120px] rounded-lg mx-auto bg-red-200"></div>
+                            <div style={{ backgroundImage: `url('${doctorInfo.image}')` }} className="w-[120px] bg-cover bg-center bg-no-repeat h-[120px] rounded-lg mx-auto bg-red-200"></div>
                             <div className="text-primary-purple-500 text-xl font-semibold">{doctorInfo.doctorName}</div>
                             <div className="">{doctorInfo?.specialtyData?.specialtyName}</div>
                         </div>
                         <div className="hidden sm:flex justify-between items-center gap-3 shadow-xl border rounded-lg p-3 min-w-[664px]">
-                            <div className="w-[150px] h-[150px] rounded-lg bg-red-200 "></div>
+                            <div style={{ backgroundImage: `url('${doctorInfo.image}')` }} className="w-[150px] h-[150px] rounded-lg bg-red-200 bg-cover bg-center bg-no-repeat"></div>
                             <div className="flex flex-col gap-2 ">
                                 <p className="">{doctorInfo.doctorName}</p>
-                                <p className="">{doctorInfo?.positionData?.positionName}</p>
+                                {/* <p className="">{doctorInfo?.positionData?.positionName}</p> */}
                             </div>
                             <div className="flex-grow flex-row flex gap-4 p-12">
                                 <p>{doctorInfo?.positionData?.positionName}</p>

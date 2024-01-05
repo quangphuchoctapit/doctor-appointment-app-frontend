@@ -35,7 +35,6 @@ const ManageSpecialties = () => {
     const handleAddSpecialty = async () => {
         setIsAdd(true)
         setOpenModal(true)
-        console.log('check state: hello', specialtyName, description, specialtyId, image)
         let data = await createSpecialty({
             specialtyName,
             specialtyId,
@@ -68,7 +67,6 @@ const ManageSpecialties = () => {
         })
 
         if (data && data.data.EC === 0) {
-            console.log('cehck state: ', specialtyName, specialtyId, description)
 
             toast.success(data.data.EM)
             setImage('')

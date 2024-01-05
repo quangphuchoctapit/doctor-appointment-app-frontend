@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../features/user'
 const Nav = () => {
+    const user = useSelector((state) => state.user.value)
+    const dispatch = useDispatch()
+
     const [openMangeAdmin, setOpenManageAdmin] = useState(false)
     return (
         <div className="w-full max-h-[100px] bg-black sticky top-0 left-0 hidden sm:block z-[100]">
@@ -32,9 +35,9 @@ const Nav = () => {
                     </div>
                     <div className=" text-white flex gap-2 items-center">
                         <Link to='/user-profile/'>
-                            <div className="w-12 h-12 rounded-full border-2 border-green-400"></div>
+                            <div style={{ backgroundImage: `url('${user.image}')` }} className="w-12 h-12 rounded-full border-2 border-green-400 bg-cover bg-center bg-no-repeat"></div>
                         </Link>
-                        <Link to='/login'>
+                        <Link onClick={() => dispatch(logout())} to='/login'>
                             <button className='p-2 border rounded-lg flex items-center text-red-400 hover:text-white hover:bg-red-500 hover:duration-200 border-red-400'>Log out</button>
                         </Link>
                     </div>

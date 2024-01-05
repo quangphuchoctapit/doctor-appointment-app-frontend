@@ -27,7 +27,6 @@ const AllDoctors = () => {
             setListDoctors(response.data.DT)
         }
     }
-    console.log(listDoctors)
     return (
         <>
             <div className="all-doctors-container">
@@ -58,7 +57,7 @@ const AllDoctors = () => {
                                     listDoctors.map((item) => (
                                         <Link to={`/detail-doctor/${item.id}`} key={item.id} className="p-3 cursor-pointer  shadow-xl border hover:duration-200 hover:bg-gray-100 rounded-lg flex gap-8 md:gap-0 md:justify-between items-center">
                                             <div className="flex items-center gap-3">
-                                                <div className="border border-red-400 h-[80px] w-[80px] md:w-[120px] md:h-[120px]"></div>
+                                                <div style={{ backgroundImage: `url('${item.image}')` }} className="border bg-center bg-cover bg-no-repeat rounded-full shadow-md shadow-primary-purple-200 h-[80px] w-[80px] md:w-[120px] md:h-[120px]"></div>
                                                 <div className="flex flex-col gap-3 items-center">
                                                     <div className=" font-semibold">{item.username}</div>
                                                     <div className="text-gray-700">{item?.doctorData?.positionData?.positionName || 'Unset'}</div>

@@ -3,8 +3,11 @@ import { Link, useHistory } from 'react-router-dom';
 import Nav from '../Nav'
 import { FaLocationDot } from "react-icons/fa6";
 import { FaRegBell } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 const HomePage = () => {
+    const user = useSelector(state => state.user.value)
+    console.log('check user:', user)
     return (
         <div className='homepage-container'>
             <Nav />

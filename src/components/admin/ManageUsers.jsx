@@ -41,7 +41,6 @@ const ManageUsers = () => {
         let response = await filterRoleNotEqualTo({
             roleId: roleFilter
         })
-        console.log('check role selectedd: ', selectedRoleId)
         if (response && response.data && response.data.EC === 0) {
             setListUserFilter(response.data.DT)
             setIsOpenModal(true);

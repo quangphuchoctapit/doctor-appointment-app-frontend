@@ -106,9 +106,9 @@ const ManageClinics = () => {
 
     }
 
-    const deleteClinic = (data) => {
-        console.log('delete: ', data.id)
-    }
+    // const deleteClinic = (data) => {
+    //     console.log('delete: ', data.id)
+    // }
 
 
 

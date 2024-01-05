@@ -4,9 +4,11 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FaFacebook, FaGoogle, FaApple } from "react-icons/fa";
 import { checkLogin } from '../../service/userService'
 import { toast } from 'react-toastify'
-
+import { useDispatch } from 'react-redux';
+import { editImage, updateEmail, editUsername } from '../../features/user';
 
 const Login = () => {
+    const dispatch = useDispatch()
     const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -14,14 +16,15 @@ const Login = () => {
     const handleLogin = async () => {
         let loginApi = await checkLogin(email, password)
         let response = loginApi.data
-        console.log('check res:', response)
         if (response && response.EC === 0) {
             toast.success(response.EM)
-            console.log('check img: ', response.DT.image)
-            // history.push('/')
+            dispatch(updateEmail(email))
+            dispatch(editImage(response.DT.image))
+            dispatch(editUsername(response.DT.username))
+
+            history.push('/')
         } else {
             toast.warning(response.EM)
-
         }
     }
 

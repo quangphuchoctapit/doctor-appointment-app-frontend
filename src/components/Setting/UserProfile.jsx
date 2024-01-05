@@ -9,8 +9,13 @@ import { BiLogoFacebookCircle } from "react-icons/bi";
 import { IoInformationCircle } from "react-icons/io5";
 import { convertBase64 } from '../../utils/convertBase64';
 import { editUserImage } from '../../service/userService'
+import { useSelector, useDispatch } from 'react-redux';
+import { editImage } from '../../features/user';
 
 const UserProfile = () => {
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user.value)
+
     const [image, setImage] = useState('')
     const handleUploadImage = async (e) => {
         const file = e.target.files[0]
@@ -19,13 +24,17 @@ const UserProfile = () => {
     }
 
     const uploadImage = async () => {
-        let dataServer = await editUserImage({ email: 'admin@gmail.com', image: image })
-        console.log('hcekc dataserver: ', dataServer)
+        let dataServer = await editUserImage({ email: user.email, image: image })
     }
 
     useEffect(() => {
         uploadImage()
+        dispatch(editImage(image))
     }, [image])
+
+    useEffect(() => {
+        dispatch(editImage(user.image))
+    }, [])
 
     return (
         <>
@@ -38,21 +47,21 @@ const UserProfile = () => {
                             <div className="absolute bottom-[-60px] sm:bottom-[-80px] max-sm:right-0 max-sm:left-0 left-5 flex justify-start">
                                 <div className="flex gap-5 items-end mx-auto">
                                     <form action="">
-                                        <div className="bg-red-200 mx-auto rounded-full sm:w-44 sm:h-44 w-32 h-32 relative">
-                                            <label htmlFor='editImage' className="absolute bottom-[-5px] right-[-5px] hover:duration-200 hover:bg-gray-200 cursor-pointer sm:bottom-0 sm:right-0 rounded-full flex justify-center items-center w-12 h-12 bg-white p-3 shadow-xl border-2">
+                                        <div style={{ backgroundImage: `url('${user.image}')` }} className="bg-red-200 mx-auto rounded-full sm:w-44 sm:h-44 w-32 h-32 relative bg-cover bg-no-repeat bg-center">
+                                            <label htmlFor='setImage' className="absolute bottom-[-5px] right-[-5px] hover:duration-200 hover:bg-gray-200 cursor-pointer sm:bottom-0 sm:right-0 rounded-full flex justify-center items-center w-12 h-12 bg-white p-3 shadow-xl border-2">
                                                 <LuPencil size={20} />
                                             </label>
                                             <input
                                                 type="file" className='hidden'
-                                                id='editImage'
+                                                id='setImage'
                                                 accept='.jpg, .png, .jpeg'
                                                 onChange={e => handleUploadImage(e)}
                                             />
                                         </div>
                                     </form>
                                     <div className="sm:flex gap-2 hidden sm:flex-col">
-                                        <h3 className='text-2xl font-semibold'>Name</h3>
-                                        <p className='text-gray-500'>name@gmail.com</p>
+                                        <h3 className='text-2xl font-semibold'>{user.username}</h3>
+                                        <p className='text-gray-500'>{user.email}</p>
                                     </div>
                                 </div>
                             </div>
