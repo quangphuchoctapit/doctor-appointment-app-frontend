@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getDoctorInfo } from '../../service/userService.js'
 import Nav from '../Nav.jsx'
 import { PiUsersThree } from "react-icons/pi";
@@ -80,7 +80,7 @@ const DetailDoctor = () => {
                             </div>
                         </div>
                         <div className="my-6 flex flex-col gap-5 w-[95%] lg:w-full md:w-[80%]">
-                            <div className="my-6 md:max-w-[20%] text-center text-xl font-semibold cursor-pointer w-full rounded-xl bg-primary-purple-500 hover:duration-200 hover:bg-primary-purple-200 text-white p-3">Book Now</div>
+                            <Link to={`/book-doctor/${id}`} className="my-6 md:max-w-[20%] text-center text-xl font-semibold cursor-pointer w-full rounded-xl bg-primary-purple-500 hover:duration-200 hover:bg-primary-purple-200 text-white p-3">Book Now</Link>
                         </div>
                         <div className="my-6 flex flex-col gap-5 w-[95%] lg:w-full md:w-[80%]">
                             <div className="flex flex-col gap-3 my-5">
@@ -103,19 +103,9 @@ const DetailDoctor = () => {
                                             <h3 className='sm:text-xl text-lg font-semibold text-orange-700'>Reviewer's name</h3>
                                             <p>reviewer review</p>
                                         </div>
-                                    </div>
-                                    <div className="shadow-xl border rounded-lg p-3 flex gap-3 items-center">
-                                        <div className="lg:w-[80px] lg:h-[80px] w-[50px] h-[50px] rounded-full border-2 border-green-200"></div>
-                                        <div className="flex flex-col gap-3 border rounded-lg p-3">
-                                            <h3 className='sm:text-xl text-lg font-semibold text-orange-700'>Reviewer's name</h3>
-                                            <p>reviewer review</p>
-                                        </div>
-                                    </div>
-                                    <div className="shadow-xl border rounded-lg p-3 flex gap-3 items-center">
-                                        <div className="lg:w-[80px] lg:h-[80px] w-[50px] h-[50px] rounded-full border-2 border-green-200"></div>
-                                        <div className="flex flex-col gap-3 border rounded-lg p-3">
-                                            <h3 className='sm:text-xl text-lg font-semibold text-orange-700'>Reviewer's name</h3>
-                                            <p>reviewer review</p>
+                                        <div className="flex-grow flex justify-end items-center gap-1">
+                                            <span>3</span>
+                                            <FaStar className='text-yellow-700' size={20} />
                                         </div>
                                     </div>
                                 </div>

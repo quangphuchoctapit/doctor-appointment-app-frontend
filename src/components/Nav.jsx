@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 const Nav = () => {
     const [openMangeAdmin, setOpenManageAdmin] = useState(false)
     return (
-        <div className="w-full max-h-[100px] bg-black sticky top-0 left-0 hidden sm:block">
+        <div className="w-full max-h-[100px] bg-black sticky top-0 left-0 hidden sm:block z-[100]">
             <div className="max-w-screen-lg mx-auto">
                 <div className="flex justify-between items-center gap-5  pr-3 ">
                     <div className="flex justify-start items-center text-white">
@@ -30,7 +30,10 @@ const Nav = () => {
                         <input type="text" placeholder='Search...' className='border-2 bg-transparent text-white border-white p-2 rounded-lg' />
                         <button className='p-2 border rounded-lg text-primary-green-600 hover:text-white hover:bg-primary-green-600 hover:duration-200 border-primary-green-600'>Search</button>
                     </div>
-                    <div className=" text-white">
+                    <div className=" text-white flex gap-2 items-center">
+                        <Link to='/user-profile/'>
+                            <div className="w-12 h-12 rounded-full border-2 border-green-400"></div>
+                        </Link>
                         <Link to='/login'>
                             <button className='p-2 border rounded-lg flex items-center text-red-400 hover:text-white hover:bg-red-500 hover:duration-200 border-red-400'>Log out</button>
                         </Link>

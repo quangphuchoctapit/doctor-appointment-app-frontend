@@ -81,11 +81,17 @@ const getDoctorInfo = async (data) => {
     return await axios.post('/api/v1/get-doctor-info', data)
 }
 
+const editUserImage = async (data) => {
+    return await axios.put('/api/v1/user/edit-img', data)
+}
+
+
 export {
     checkLogin, registerNewUser, getAllDoctors,
     getAllPositions, getAllDoctorPositions, createDoctorInfo,
     getAllClinics, getAllUsers, filterRoleNotEqualTo,
     setUserRole, getUserRole, createClinic,
     updateClinic, createSpecialty, updateSpecialty,
-    getAllSpecialties, getAllLocations, getDoctorInfo
+    getAllSpecialties, getAllLocations, getDoctorInfo,
+    editUserImage
 }

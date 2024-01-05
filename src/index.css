@@ -5,3 +5,11 @@
 .react-responsive-modal-modal {
     min-width: 80%;
 }
+
+.checkbox:checked {
+    border: none
+}
+
+.checkbox:checked+.check-icon {
+    display: flex;
+}

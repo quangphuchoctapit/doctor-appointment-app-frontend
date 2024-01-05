@@ -10,6 +10,9 @@ import Login from '../src/components/Auth/Login.jsx'
 import Signup from '../src/components/Auth/Signup.jsx'
 import HomePage from './components/Home/HomePage.jsx';
 import DetailDoctor from './components/Home/DetailDoctor.jsx';
+import BookDoctor from './components/Home/BookDoctor.jsx';
+import UserProfile from './components/Setting/UserProfile.jsx';
+
 import AllDoctors from './components/Home/AllDoctors.jsx';
 import ManageUsers from './components/admin/ManageUsers.jsx';
 import ManageDoctors from './components/admin/ManageDoctors.jsx';
@@ -44,6 +47,12 @@ const App = () => {
           </Route>
           <Route path='/detail-doctor/:id'>
             <DetailDoctor />
+          </Route>
+          <Route path='/book-doctor/:id'>
+            <BookDoctor />
+          </Route>
+          <Route path='/user-profile'>
+            <UserProfile />
           </Route>
           <Route path='/' exact>
             <HomePage />

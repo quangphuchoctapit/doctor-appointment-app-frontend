@@ -17,7 +17,8 @@ const Login = () => {
         console.log('check res:', response)
         if (response && response.EC === 0) {
             toast.success(response.EM)
-            history.push('/')
+            console.log('check img: ', response.DT.image)
+            // history.push('/')
         } else {
             toast.warning(response.EM)
 
