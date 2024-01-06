@@ -1,0 +1,4 @@
+
+const DETAILDOCTOR = 'DETAIL-DOCTOR'
+
+export { DETAILDOCTOR }

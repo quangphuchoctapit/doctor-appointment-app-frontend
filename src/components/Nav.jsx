@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../features/user'
+import { logout } from '../store/features/user'
 const Nav = () => {
     const user = useSelector((state) => state.user.value)
     const dispatch = useDispatch()

@@ -5,7 +5,7 @@ import { FaFacebook, FaGoogle, FaApple } from "react-icons/fa";
 import { checkLogin } from '../../service/userService'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux';
-import { editImage, updateEmail, editUsername } from '../../features/user';
+import { editImage, updateEmail, editUsername } from '../../store/features/user';
 
 const Login = () => {
     const dispatch = useDispatch()

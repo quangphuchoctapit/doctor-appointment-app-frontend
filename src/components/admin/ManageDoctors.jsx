@@ -15,22 +15,16 @@ const ManageDoctors = () => {
     let history = useHistory()
     const [listUsers, setListUsers] = useState([])
     const [openModal, setOpenModal] = React.useState(false);
-
     const [selectedClinic, setSelectedClinic] = useState('')
     const [description, setDescription] = useState('')
     const [selectedPosition, setSelectedPosition] = useState('')
     const [selectedSpecialty, setSelectedSpecialty] = useState('')
     const [selectedLocation, setSelectedLocation] = useState('')
-
     const [listClinics, setListClinics] = useState([])
     const [listSpecialties, setListSpecialties] = useState([])
     const [listPositions, setListPositions] = useState([])
     const [listLocations, setListLocations] = useState([])
-
     const [currentSelectedDoctorInfo, setCurrentSelectedDoctorInfo] = useState('')
-
-
-
     const [clinicOptions, setClinicOptions] = useState([])
     const [locationOptions, setLocationOptions] = useState([])
     const [positionOptions, setPositionOptions] = useState([])

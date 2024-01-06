@@ -10,7 +10,7 @@ import { IoInformationCircle } from "react-icons/io5";
 import { convertBase64 } from '../../utils/convertBase64';
 import { editUserImage } from '../../service/userService'
 import { useSelector, useDispatch } from 'react-redux';
-import { editImage } from '../../features/user';
+import { editImage } from '../../store/features/user';
 
 const UserProfile = () => {
     const dispatch = useDispatch()
