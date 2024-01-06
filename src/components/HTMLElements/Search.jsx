@@ -5,10 +5,12 @@ import {
     setSearchDoctorResult, setSearchUserResult,
     setListUserRedux, setListSpecialtyRedux,
     setSearchSpecialtyResult, setListClinicRedux,
-    setSearchClinicResult
+    setSearchClinicResult,
+    setListOverallRedux,
+    setSearchQueryOverall
 } from '../../store/features/search';
 import { Link } from 'react-router-dom';
-import { SEARCHCLINICS, SEARCHDOCTORS, SEARCHSPECIALTIES, SEARCHUSERS } from '../../utils/constants';
+import { SEARCHCLINICS, SEARCHDOCTORS, SEARCHOVERALL, SEARCHSPECIALTIES, SEARCHUSERS } from '../../utils/constants';
 
 const Search = (props) => {
     let { data, topic, category } = props
@@ -45,6 +47,7 @@ const Search = (props) => {
     const [closeSearch, setCloseSearch] = useState(true)
 
     const queryRedux = useSelector(state => state.search.value.query)
+
     const resultsRedux = useSelector(state => state.search.value.results)
     const listItemsRedux = useSelector(state => state.search.value.listItems)
 
@@ -66,9 +69,13 @@ const Search = (props) => {
         setCloseSearch(false)
     }
 
+    useEffect(() => {
+        dispatch(setSearchQuery(''))
+    }, [window.location.href])
 
     const handleCloseSearchResult = () => {
         setCloseSearch(true)
+        dispatch(setSearchQuery(''))
     }
     return (
         <div className="relative mt-8 mb-3 w-full">
@@ -83,7 +90,7 @@ const Search = (props) => {
                 }
             </div>
             {!closeSearch &&
-                <ul className={resultsRedux.length > 0 ? ' flex flex-col gap-5 justify-center items-center shadow-xl rounded-xl absolute w-full bg-white' : 'hidden'}>
+                <ul className={resultsRedux.length > 0 ? ' flex flex-col gap-5 justify-center items-center shadow-xl rounded-xl absolute w-full max-h-96 overflow-y-auto bg-white' : 'hidden'}>
                     {resultsRedux.length > 0 && resultsRedux.map((result, index) => {
                         return (topic === SEARCHDOCTORS ?
                             <Link to={`/detail-doctor/${result.id}`} className='cursor-pointer p-3 w-full text-center hover:duration-200 hover:bg-gray-200' key={index}>

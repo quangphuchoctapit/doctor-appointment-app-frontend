@@ -3,6 +3,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 
 const initStateValue = {
     query: '',
+    queryOverall: '',
     listItems: {
         doctors: [],
         users: [],
@@ -19,6 +20,10 @@ const searchSlice = createSlice({
     reducers: {
         setSearchQuery: (state, action) => {
             state.value.query = action.payload
+        },
+
+        setSearchQueryOverall: (state, action) => {
+            state.value.queryOverall = action.payload
         },
 
         // search doctors
@@ -68,6 +73,19 @@ const searchSlice = createSlice({
             }
             );
         },
+
+
+        //  overall seaerch
+        setListOverallRedux: (state, action) => {
+            state.value.listItems = { overallSearch: action.payload }
+        },
+        setSearchOverallResult: (state) => {
+            const searchQuery = state.value.queryOverall.toLowerCase();
+            state.value.results = state.value.listItems.overallSearch.filter((item) => {
+                return item.name.toLowerCase().includes(searchQuery)
+            }
+            );
+        },
     }
 })
 
@@ -75,6 +93,6 @@ export const { setSearchQuery, setListDoctorRedux,
     setSearchDoctorResult, setSearchUserResult,
     setListUserRedux, setListSpecialtyRedux,
     setSearchSpecialtyResult, setListClinicRedux,
-    setSearchClinicResult } = searchSlice.actions
+    setSearchClinicResult, setListOverallRedux, setSearchQueryOverall, setSearchOverallResult } = searchSlice.actions
 
 export default searchSlice.reducer

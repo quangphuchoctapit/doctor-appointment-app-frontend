@@ -21,7 +21,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
     user: userReducer,
-    search: searchReducer
+    search: searchReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
