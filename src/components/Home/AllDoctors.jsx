@@ -4,7 +4,7 @@ import { getAllSpecialties, getAllDoctors } from '../../service/userService'
 import { Link } from 'react-router-dom'
 import { FaStar } from "react-icons/fa";
 import Search from '../HTMLElements/Search';
-import { DETAILDOCTOR } from '../../utils/constants';
+import { SEARCHDOCTORS } from '../../utils/constants';
 
 const AllDoctors = () => {
 
@@ -51,7 +51,7 @@ const AllDoctors = () => {
                     <div className="flex justify-between flex-col">
                         <div className="my-3 flex flex-col items-center justify-center mx-auto w-full sm:w-[60%] md:min-w-[500px]">
                             <h1 className='text-2xl font-bold text-center'>Doctors in Doctommy</h1>
-                            <Search category={listDoctorName} topic={DETAILDOCTOR} />
+                            <Search data={listDoctorName} topic={SEARCHDOCTORS} category={SEARCHDOCTORS} />
                             <div className="w-full overflow-x-auto flex gap-3 items-center">
                                 <div className='p-3 rounded-md 
                                         border-2 hover:duration-200 hover:bg-gray-100 cursor-pointer'>All</div>

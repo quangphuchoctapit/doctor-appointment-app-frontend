@@ -5,10 +5,14 @@ import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import Search from '../HTMLElements/Search'
+import { SEARCHUSERS } from '../../utils/constants'
 
 
 const ManageUsers = () => {
     const [isOpenModal, setIsOpenModal] = React.useState(false);
+
+    const [userListRedux, setUserListRedux] = useState([])
 
     const [listUserFilter, setListUserFilter] = useState([])
     const [selectedRole, setSelectedRole] = useState('')
@@ -67,6 +71,14 @@ const ManageUsers = () => {
         }
     }
 
+    useEffect(() => {
+        const listDoctorName = listUsers.map((item) => (
+            { name: item.username, id: item.id, email: item.email }
+        ))
+        setUserListRedux(listDoctorName)
+    }, [listUsers])
+
+
     return (
         <>
             <Nav />
@@ -77,7 +89,7 @@ const ManageUsers = () => {
                     <div key={user.id} className="p-3 rounded-md border flex flex-col gap-2">
                         <div className="flex justify-between">
                             <div className="w-full flex gap-2 items-center">
-                                <div className="w-[50px] h-[50px] border hidden md:block border-red-300"></div>
+                                <div style={{ backgroundImage: `url('${user.image}')` }} className="w-[50px] h-[50px] bg-center bg-no-repeat bg-cover border hidden md:block shadow-lg rounded-full"></div>
                                 <div className="font-semibold">{user.username}</div>
                             </div>
                             <div className="">
@@ -93,7 +105,9 @@ const ManageUsers = () => {
             <div className='w-full my-6'>
                 <div className="max-w-screen-lg mx-auto">
                     <div className="p-3 flex flex-col gap-5">
-                        <input type="text" className='p-3 w-full rounded-xl my-3 bg-gray-100 text-black' placeholder='Search...' />
+                        {/* <input type="text" className='p-3 w-full rounded-xl my-3 bg-gray-100 text-black' placeholder='Search...' /> */}
+                        <Search category={SEARCHUSERS} data={userListRedux} />
+
                         <div className="flex justify-center md:justify-end items-center gap-2">
                             <div onClick={() => openModal('D')} className="p-3 rounded-md border-2 bg-gray-600 hover:duration-200 hover:bg-gray-500 cursor-pointer text-white">Set Doctor</div>
                             <div onClick={() => openModal('A')} className="p-3 rounded-md border-2 bg-gray-600 hover:duration-200 hover:bg-gray-500 cursor-pointer text-white">Set Admin</div>
@@ -102,7 +116,7 @@ const ManageUsers = () => {
                         <div className="flex flex-col gap-3 mt-6">
                             {listUsers && listUsers.length > 0 && listUsers.map((user, index) => (
                                 <div key={user.id} className="p-3 border-2 rounded-lg flex justify-between items-center">
-                                    <div className="h-[50px] hidden sm:block w-[50px] border border-red-400"></div>
+                                    <div style={{ backgroundImage: `url('${user.image}')` }} className="h-[50px] hidden sm:block w-[50px] border shadow-lg bg-no-repeat bg-cover bg-center rounded-full"></div>
                                     <div className="flex flex-col items-center flex-grow">
                                         <h3>Name</h3>
                                         <p>{user.username}</p>

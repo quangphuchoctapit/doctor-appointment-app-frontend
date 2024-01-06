@@ -5,9 +5,13 @@ import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import Search from '../HTMLElements/Search'
+import { SEARCHSPECIALTIES } from '../../utils/constants'
 
 
 const ManageSpecialties = () => {
+    const [spcialtyListRedux, setSpecialtyListRedux] = useState([])
+
     const [openModal, setOpenModal] = React.useState(false);
     const [isAdd, setIsAdd] = useState(false)
     const [specialtyName, setSpecialtyName] = useState('')
@@ -15,6 +19,7 @@ const ManageSpecialties = () => {
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
     const [currentSpecialtyId, setCurrentSpecialtyId] = useState('')
+
 
     const fetchAllSpecialties = useCallback(async () => {
         let dataServer = await getAllSpecialties()
@@ -76,8 +81,15 @@ const ManageSpecialties = () => {
             setOpenModal(false)
             fetchAllSpecialties()
         }
-
     }
+
+
+    useEffect(() => {
+        const newListSpecialties = listSpecialties.map((item) => (
+            { name: item.specialtyName, id: item.id, specialtyId: item.specialtyId }
+        ))
+        setSpecialtyListRedux(newListSpecialties)
+    }, [listSpecialties])
 
     return (
         <>
@@ -112,7 +124,7 @@ const ManageSpecialties = () => {
             <div className='w-full my-6'>
                 <div className="max-w-screen-lg mx-auto">
                     <div className="p-3 flex flex-col gap-5">
-                        <input type="text" className='p-3 w-full rounded-xl my-3 bg-gray-100 text-black' placeholder='Search...' />
+                        <Search category={SEARCHSPECIALTIES} data={spcialtyListRedux} />
                         <div className="flex justify-center md:justify-end items-center gap-2">
                             <div onClick={handleAddSpecialty} className="p-3 rounded-md border-2 bg-primary-purple-500 hover:duration-200 hover:bg-primary-purple-200 cursor-pointer text-white">Add Specialty</div>
                         </div>

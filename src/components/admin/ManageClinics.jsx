@@ -6,9 +6,13 @@ import Select from 'react-select'
 import { toast } from 'react-toastify'
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import Search from '../HTMLElements/Search'
+import { SEARCHCLINICS } from '../../utils/constants'
 
 
 const ManageClinics = () => {
+    const [clinicListRedux, setClinicListRedux] = useState([])
+
     let history = useHistory()
     const [openModal, setOpenModal] = React.useState(false);
     const [isAdd, setIsAdd] = useState(false)
@@ -106,10 +110,14 @@ const ManageClinics = () => {
 
     }
 
-    // const deleteClinic = (data) => {
-    //     console.log('delete: ', data.id)
-    // }
+    // console.log('check :', listClinics)
 
+    useEffect(() => {
+        const newListClinics = listClinics.map((item) => (
+            { name: item.name, id: item.id }
+        ))
+        setClinicListRedux(newListClinics)
+    }, [listClinics])
 
 
     return (
@@ -144,7 +152,9 @@ const ManageClinics = () => {
             <div className='w-full my-6'>
                 <div className="max-w-screen-lg mx-auto">
                     <div className="p-3 flex flex-col gap-5">
-                        <input type="text" className='p-3 w-full rounded-xl my-3 bg-gray-100 text-black' placeholder='Search...' />
+                        <Search category={SEARCHCLINICS} data={clinicListRedux} />
+
+
                         <div className="flex justify-center md:justify-end items-center gap-2">
                             <div onClick={handleAddClinic} className="p-3 rounded-md border-2 bg-primary-purple-500 hover:duration-200 hover:bg-primary-purple-200 cursor-pointer text-white">Add Clinics</div>
                         </div>

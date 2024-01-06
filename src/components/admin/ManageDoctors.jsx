@@ -10,9 +10,15 @@ import { toast } from 'react-toastify'
 import Select from 'react-select'
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import { useDispatch, useSelector } from 'react-redux';
+import Search from '../HTMLElements/Search'
+import { SEARCHDOCTORS } from '../../utils/constants';
+
+
 
 const ManageDoctors = () => {
     let history = useHistory()
+    const [listDoctorName, setListDoctorName] = useState([])
     const [listUsers, setListUsers] = useState([])
     const [openModal, setOpenModal] = React.useState(false);
     const [selectedClinic, setSelectedClinic] = useState('')
@@ -95,6 +101,15 @@ const ManageDoctors = () => {
         fetchAllClinics()
         fetchAllLocations()
     }, [openModal])
+
+
+
+    useEffect(() => {
+        const listDoctorName = listUsers.map((item) => (
+            { name: item.username, id: item.id }
+        ))
+        setListDoctorName(listDoctorName)
+    }, [listUsers])
 
 
     useEffect(() => {
@@ -181,31 +196,31 @@ const ManageDoctors = () => {
             <div className='w-full my-6'>
                 <div className="max-w-screen-lg mx-auto">
                     <div className="p-3 flex flex-col gap-5">
-                        <input type="text" className='p-3 w-full rounded-xl my-3 bg-gray-100 text-black' placeholder='Search...' />
+                        <Search category={SEARCHDOCTORS} data={listDoctorName} topic={SEARCHDOCTORS} />
                         <div className="flex justify-center md:justify-end items-center gap-2">
                             <div onClick={goToManageUsers} className="p-3 rounded-md border-2 bg-primary-purple-500 hover:duration-200 hover:bg-primary-purple-200 cursor-pointer text-white">Add Doctor</div>
                         </div>
                         <div className="flex flex-col gap-3 mt-6">
                             {listUsers && listUsers.length > 0 ? listUsers.map((user, index) => (
                                 <div key={user.id} onClick={() => handleModifyDoctorInfo(user.id)} className="p-3 border-2 rounded-lg flex justify-between items-center">
-                                    <div className="h-[50px] hidden sm:block w-[50px] border border-red-400"></div>
-                                    <div className="flex flex-col items-center flex-grow">
+                                    <div style={{ backgroundImage: `url('${user.image}')` }} className="h-[50px] mr-5 hidden sm:block w-[50px] border shadow-lg bg-cover bg-no-repeat bg-center rounded-full"></div>
+                                    <div className="flex flex-col items-start justify-center flex-grow">
                                         <h3>Name</h3>
                                         <p>{user.username}</p>
                                     </div>
-                                    <div className=" hidden sm:flex flex-col items-center flex-grow">
+                                    <div className=" hidden sm:flex flex-col items-start justify-center flex-grow">
                                         <h3>Position</h3>
                                         <p>{user.doctorData ? (user.doctorData.positionData && user.doctorData.positionData.positionName) : 'Unset'}</p>
                                     </div>
-                                    <div className=" flex-col flex items-center flex-grow">
+                                    <div className=" flex-col flex items-start justify-center flex-grow">
                                         <h3>Specialty</h3>
                                         <p>{user.doctorData ? (user.doctorData.specialtyData && user.doctorData.specialtyData.specialtyName) : 'Unset'}</p>
                                     </div>
-                                    <div className=" flex-col hidden md:flex items-center flex-grow">
+                                    <div className=" flex-col hidden md:flex items-start justify-center flex-grow">
                                         <h3>Clinic</h3>
                                         <p>{user.doctorData ? (user.doctorData.clinicData && user.doctorData.clinicData.name) : 'Unset'}</p>
                                     </div>
-                                    <div className=" flex-col hidden md:flex items-center flex-grow">
+                                    <div className=" flex-col hidden md:flex items-start justify-center flex-grow">
                                         <h3>Clinic</h3>
                                         <p>{user.doctorData ? (user.doctorData.locationData && user.doctorData.locationData.locationName) : 'Unset'}</p>
                                     </div>
