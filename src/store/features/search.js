@@ -9,9 +9,10 @@ const initStateValue = {
         users: [],
         specialties: [],
         clinics: [],
-        overallSearch: []
     },
-    results: []
+    overallSearch: [],
+    results: [],
+    resultOverall: []
 }
 
 const searchSlice = createSlice({
@@ -32,6 +33,7 @@ const searchSlice = createSlice({
         },
         setSearchDoctorResult: (state) => {
             const searchQuery = state.value.query.toLowerCase();
+            console.log('doctorlist redux', current(state.value.listItems))
             state.value.results = state.value.listItems.doctors.filter((item) => {
                 return item.name.toLowerCase().includes(searchQuery)
             }
@@ -44,6 +46,7 @@ const searchSlice = createSlice({
         },
         setSearchUserResult: (state) => {
             const searchQuery = state.value.query.toLowerCase();
+            console.log(current(state.value.listItems))
             state.value.results = state.value.listItems.users.filter((item) => {
                 return item.name.toLowerCase().includes(searchQuery)
             }
@@ -77,11 +80,12 @@ const searchSlice = createSlice({
 
         //  overall seaerch
         setListOverallRedux: (state, action) => {
-            state.value.listItems = { overallSearch: action.payload }
+            state.value.overallSearch = [action.payload]
         },
         setSearchOverallResult: (state) => {
             const searchQuery = state.value.queryOverall.toLowerCase();
-            state.value.results = state.value.listItems.overallSearch.filter((item) => {
+            let searchList = state.value.overallSearch
+            state.value.resultOverall = searchList[0].filter((item) => {
                 return item.name.toLowerCase().includes(searchQuery)
             }
             );

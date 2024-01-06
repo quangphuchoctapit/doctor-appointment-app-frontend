@@ -4,7 +4,7 @@ import {
     setSearchQueryOverall, setListOverallRedux, setSearchOverallResult
 } from '../../store/features/search';
 import { Link } from 'react-router-dom';
-import { SEARCHCLINICS, SEARCHDOCTORS, SEARCHOVERALL, SEARCHSPECIALTIES, SEARCHUSERS } from '../../utils/constants';
+import { SEARCHOVERALL } from '../../utils/constants';
 
 const SearchOverall = (props) => {
     let { data, topic, category } = props
@@ -24,9 +24,8 @@ const SearchOverall = (props) => {
     const [closeSearch, setCloseSearch] = useState(true)
 
     const queryRedux = useSelector(state => state.search.value.queryOverall)
-
-    const resultsRedux = useSelector(state => state.search.value.results)
-    const listItemsRedux = useSelector(state => state.search.value.listItems)
+    const resultsRedux = useSelector(state => state.search.value.resultOverall)
+    const listItemsRedux = useSelector(state => state.search.value.overallSearch)
 
     const handleSearch = (e) => {
         const newQuery = e.target.value
@@ -39,6 +38,7 @@ const SearchOverall = (props) => {
 
     useEffect(() => {
         dispatch(setSearchQueryOverall(''))
+        setCloseSearch(true)
     }, [window.location.href])
 
     const handleCloseSearchResult = () => {

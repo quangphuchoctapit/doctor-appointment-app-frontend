@@ -47,9 +47,13 @@ const Search = (props) => {
     const [closeSearch, setCloseSearch] = useState(true)
 
     const queryRedux = useSelector(state => state.search.value.query)
-
     const resultsRedux = useSelector(state => state.search.value.results)
     const listItemsRedux = useSelector(state => state.search.value.listItems)
+
+    // console.log('query normal', queryRedux)
+
+    // console.log('listItemsRedux normal', listItemsRedux)
+    // console.log('results redux normal: ', resultsRedux)
 
     const handleSearch = (e) => {
         const newQuery = e.target.value

@@ -28,8 +28,6 @@ const Nav = () => {
             })
             let overallDataFromServer = [...newDoctorData, ...newClinicData, ...newSpecialtyData]
             setListOverallSearch(overallDataFromServer)
-            console.log('listOverallSearch', listOverallSearch)
-
         }
     }
 
