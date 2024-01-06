@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Nav from '../Nav.jsx'
-import RadioButton from '../HTMLElements/RadioBtn.jsx'
 import { MdOutlineVideocam } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import { HiOutlineChat } from "react-icons/hi";
@@ -8,14 +7,16 @@ import { HiOutlineCalendarDays } from "react-icons/hi2";
 import { getDoctorInfo } from '../../service/userService.js'
 import { useParams, Link } from "react-router-dom";
 
-
 const BookDoctor = () => {
     const { id } = useParams()
     const [doctorId, setDoctorId] = useState('')
-    const [doctorInfo, setDoctorInfo] = useState([])
+    const [doctorInfo, setDoctorInfo] = useState({})
+    const [availableTime, setAvailableTime] = useState([])
+    const [isFirstRender, setIsFirstRender] = useState(true);
+
+
     useEffect(() => {
         setDoctorId(id)
-
     }, [])
     useEffect(() => {
         const fetchDoctorInfo = async () => {
@@ -27,7 +28,14 @@ const BookDoctor = () => {
         fetchDoctorInfo(doctorId)
     }, [doctorId])
 
-    console.log(doctorInfo)
+    useEffect(() => {
+        if (isFirstRender) {
+            setIsFirstRender(false);
+            return;
+        }
+        let availableTimeData = JSON.parse(doctorInfo.availableTime)
+        setAvailableTime(availableTimeData)
+    }, [doctorInfo])
     return (
         <>
             <Nav />
@@ -40,23 +48,22 @@ const BookDoctor = () => {
                             <div className="p-3 rounded-xl shadow-xl border cursor-pointer hover:duration-200 hover:bg-gray-200"><HiOutlineCalendarDays /></div>
                         </div>
                         <div className="flex flex-col items-center gap-5 md:flex-row w-full justify-between md:my-6">
-                            <div className="rounded-lg shadow-xl border flex flex-col gap-2 p-3 bg-white md:max-w-[50%]">
-                                <h3 className="text-xl font-semibold hidden md:block overflow-x-auto">Date</h3>
+                            <div className="rounded-lg shadow-xl border flex flex-col gap-2 p-3 w-full bg-white md:max-w-[50%]">
+                                <h3 className="text-xl font-semibold block overflow-x-auto">Date</h3>
                                 <div className="flex items-center gap-2">
                                     <div className="cursor-pointer hover:duration-200 hover:scale-110 hover:bg-gray-200 p-3 rounded-xl">date</div>
                                     <div className="cursor-pointer scale-110 p-3 rounded-xl bg-primary-purple-500 text-white">date</div>
                                     <div className="cursor-pointer hover:duration-200 hover:scale-110 hover:bg-gray-200 p-3 rounded-xl">date</div>
-                                    <div className="cursor-pointer hover:duration-200 hover:scale-110 hover:bg-gray-200 p-3 rounded-xl">date</div>
-                                    <div className="cursor-pointer hover:duration-200 hover:scale-110 hover:bg-gray-200 p-3 rounded-xl">date</div>
+
                                 </div>
                             </div>
-                            <div className="flex flex-col items-start w-full sm:max-w-[80%] gap-3 md:max-w-[50%] shadow-xl p-3 rounded-lg border">
+                            <div className="flex flex-col items-start w-full gap-3 md:max-w-[50%] shadow-xl p-3 rounded-lg border">
                                 <h3 className="text-xl font-semibold">Available Time</h3>
-                                <div className="flex gap-1">
-                                    <div className="p-2 rounded-2xl text-center text-gray-500 border-2 hover:bg-gray-200 cursor-pointer md:hover:scale-110 md:hover:duration-200">05:00 pm</div>
-                                    <div className="p-2 rounded-2xl text-center text-gray-500 border-2 hover:bg-gray-200 cursor-pointer md:hover:scale-110 md:hover:duration-200">07:00 pm</div>
+                                <div className="flex gap-3">
+                                    {availableTime?.length > 0 && availableTime.map((item) => (
+                                        <div key={item.value} className="p-2 rounded-2xl text-center text-gray-500 border-2 hover:bg-gray-200 cursor-pointer hover:scale-110 md:hover:duration-200">{item.label}</div>
+                                    ))}
                                     <div className="p-2 rounded-2xl text-center text-white border-2 border-primary-purple-500 bg-primary-purple-500  cursor-pointer scale-110 ">09:00 pm</div>
-                                    <div className="p-2 rounded-2xl text-center text-gray-500 border-2 hover:bg-gray-200 cursor-pointer md:hover:scale-110 md:hover:duration-200">11:00 pm</div>
                                 </div>
                             </div>
                         </div>

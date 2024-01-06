@@ -14,6 +14,7 @@ import 'react-responsive-modal/styles.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from '../HTMLElements/Search'
 import { SEARCHDOCTORS } from '../../utils/constants';
+import { set } from 'lodash'
 
 
 
@@ -26,7 +27,7 @@ const ManageDoctors = () => {
     const [description, setDescription] = useState('')
     const [selectedPosition, setSelectedPosition] = useState('')
     const [selectedSpecialty, setSelectedSpecialty] = useState('')
-    const [selectedSchedule, setSelectedSchedule] = useState('')
+    const [selectedSchedule, setSelectedSchedule] = useState([])
 
     const [selectedLocation, setSelectedLocation] = useState('')
     const [listClinics, setListClinics] = useState([])
@@ -157,7 +158,7 @@ const ManageDoctors = () => {
             positionId: selectedPosition,
             clinicId: selectedClinic,
             locationId: selectedLocation,
-            scheduleId: selectedSchedule
+            availableTime: selectedSchedule
         })
         if (data && data.data.EC === 0) {
             toast.success(data.data.EM)
@@ -171,7 +172,7 @@ const ManageDoctors = () => {
             setSelectedPosition('')
             setSelectedSpecialty('')
             setSelectedLocation('')
-            setSelectedSchedule('')
+            setSelectedSchedule([])
         }
     }
 
@@ -179,6 +180,12 @@ const ManageDoctors = () => {
         setOpenModal(true)
         setCurrentSelectedDoctorInfo(userId)
         handleCreateDoctorInfo(userId)
+    }
+
+    const handleGetSelectedSchedule = async (selectedScheduleData) => {
+        let acceptReplicatedSchedule = ([...selectedSchedule, selectedScheduleData])
+        let officialSchedule = [...new Set(acceptReplicatedSchedule)];
+        setSelectedSchedule(officialSchedule)
     }
 
     return (
@@ -205,9 +212,15 @@ const ManageDoctors = () => {
                         <label htmlFor="location">Location</label>
                         <Select options={locationOptions} value={locationOptions.value} onChange={(locationOptions) => setSelectedLocation(locationOptions.value)} />
                     </div>
-                    <div className="col-span-2 sm:col-span-1">
+                    <div className="col-span-2 ">
                         <label htmlFor="location">Schedule</label>
-                        <Select options={scheduleOptions} value={scheduleOptions.value} onChange={(scheduleOptions) => setSelectedSchedule(scheduleOptions.value)} />
+                        <div className="w-full overflow-x-auto flex gap-2 items-center justify-between">
+                            {scheduleOptions && scheduleOptions.map((item) => (
+                                <div key={item.value} onClick={() => handleGetSelectedSchedule({ value: item.value, label: item.label })} className="p-2 rounded-xl bg-red-200 cursor-pointer hover:duration-200 hover:bg-red-300">{item.label}</div>
+
+                            ))}
+                        </div>
+                        {/* <Select options={scheduleOptions} value={scheduleOptions.value} onChange={(scheduleOptions) => setSelectedSchedule(scheduleOptions.value)} /> */}
                     </div>
                     <div className="col-span-2 flex flex-col  gap-5">
                         <label htmlFor="description">Description</label>
