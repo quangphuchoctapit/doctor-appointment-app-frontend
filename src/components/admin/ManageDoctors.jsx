@@ -3,7 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import Nav from '../Nav'
 import {
     getAllDoctors, getAllClinics, getAllSpecialties,
-    getAllDoctorPositions, getAllLocations, createDoctorInfo
+    getAllDoctorPositions, getAllLocations, createDoctorInfo,
+    getAllSchedule
 } from '../../service/userService'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -25,16 +26,22 @@ const ManageDoctors = () => {
     const [description, setDescription] = useState('')
     const [selectedPosition, setSelectedPosition] = useState('')
     const [selectedSpecialty, setSelectedSpecialty] = useState('')
+    const [selectedSchedule, setSelectedSchedule] = useState('')
+
     const [selectedLocation, setSelectedLocation] = useState('')
     const [listClinics, setListClinics] = useState([])
     const [listSpecialties, setListSpecialties] = useState([])
     const [listPositions, setListPositions] = useState([])
+
+    const [listSchedule, setListSchedule] = useState([])
     const [listLocations, setListLocations] = useState([])
     const [currentSelectedDoctorInfo, setCurrentSelectedDoctorInfo] = useState('')
     const [clinicOptions, setClinicOptions] = useState([])
     const [locationOptions, setLocationOptions] = useState([])
     const [positionOptions, setPositionOptions] = useState([])
     const [specialtyOptions, setSpecialtyOptions] = useState([])
+    const [scheduleOptions, setScheduleOptions] = useState([])
+
     useEffect(() => {
         const fetchAllClinics = async () => {
             let dataAllClinics = await getAllClinics()
@@ -78,7 +85,22 @@ const ManageDoctors = () => {
                     setPositionOptions(transformedObjListClinics)
                 }
             } else {
-                setListSpecialties([])
+                setListPositions([])
+            }
+        }
+        let fetchAllSchedule = async () => {
+            let dataAllSchedule = await getAllSchedule()
+            if (dataAllSchedule && dataAllSchedule.data.EC === 0) {
+                setListSchedule(dataAllSchedule.data.DT)
+                if (listSchedule && listSchedule.length > 0) {
+                    let transformedObjSchedule = listSchedule.map((item) => ({
+                        value: item.scheduleId,
+                        label: item.scheduleName
+                    }))
+                    setScheduleOptions(transformedObjSchedule)
+                }
+            } else {
+                setListSchedule([])
             }
         }
         let fetchAllLocations = async () => {
@@ -100,9 +122,8 @@ const ManageDoctors = () => {
         fetchAllSpecialties()
         fetchAllClinics()
         fetchAllLocations()
+        fetchAllSchedule()
     }, [openModal])
-
-
 
     useEffect(() => {
         const listDoctorName = listUsers.map((item) => (
@@ -135,7 +156,8 @@ const ManageDoctors = () => {
             description: description,
             positionId: selectedPosition,
             clinicId: selectedClinic,
-            locationId: selectedLocation
+            locationId: selectedLocation,
+            scheduleId: selectedSchedule
         })
         if (data && data.data.EC === 0) {
             toast.success(data.data.EM)
@@ -149,6 +171,7 @@ const ManageDoctors = () => {
             setSelectedPosition('')
             setSelectedSpecialty('')
             setSelectedLocation('')
+            setSelectedSchedule('')
         }
     }
 
@@ -181,7 +204,10 @@ const ManageDoctors = () => {
                     <div className="col-span-2 sm:col-span-1">
                         <label htmlFor="location">Location</label>
                         <Select options={locationOptions} value={locationOptions.value} onChange={(locationOptions) => setSelectedLocation(locationOptions.value)} />
-
+                    </div>
+                    <div className="col-span-2 sm:col-span-1">
+                        <label htmlFor="location">Schedule</label>
+                        <Select options={scheduleOptions} value={scheduleOptions.value} onChange={(scheduleOptions) => setSelectedSchedule(scheduleOptions.value)} />
                     </div>
                     <div className="col-span-2 flex flex-col  gap-5">
                         <label htmlFor="description">Description</label>
@@ -221,7 +247,7 @@ const ManageDoctors = () => {
                                         <p>{user.doctorData ? (user.doctorData.clinicData && user.doctorData.clinicData.name) : 'Unset'}</p>
                                     </div>
                                     <div className=" flex-col hidden md:flex items-start justify-center flex-grow">
-                                        <h3>Clinic</h3>
+                                        <h3>Location</h3>
                                         <p>{user.doctorData ? (user.doctorData.locationData && user.doctorData.locationData.locationName) : 'Unset'}</p>
                                     </div>
                                 </div>

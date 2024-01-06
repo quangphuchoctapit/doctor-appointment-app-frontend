@@ -4,7 +4,6 @@ import { getDoctorInfo } from '../../service/userService.js'
 import Nav from '../Nav.jsx'
 import { PiUsersThree } from "react-icons/pi";
 import { FaMedal, FaStar } from "react-icons/fa";
-import { useSelector } from 'react-redux';
 
 const DetailDoctor = () => {
     // const user = useSelector(state => state.user.value)
@@ -24,7 +23,6 @@ const DetailDoctor = () => {
         }
         fetchDoctorInfo(doctorId)
     }, [doctorId])
-    console.log('check doctor:', doctorInfo)
     return (
         <div>
             <Nav />

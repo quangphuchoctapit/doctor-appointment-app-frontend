@@ -31,11 +31,6 @@ const Nav = () => {
         }
     }
 
-    useEffect(() => {
-        // fetchOverallSearch()
-    }, [listOverallSearch])
-
-
     const user = useSelector((state) => state.user.value)
     const dispatch = useDispatch()
 
@@ -62,7 +57,7 @@ const Nav = () => {
                         <Link to='/all-doctors' className="p-5 hidden md:block hover:bg-slate-600 hover:duration-200">All Doctors</Link>
 
                     </div>
-                    <div className='flex gap-2 min-w-[300px] md:min-w-[400px]'>
+                    <div className='flex gap-2  md:max-w-[200px] lg:max-w-[400px]'>
                         <SearchOverall data={listOverallSearch} category={SEARCHOVERALL} />
                     </div>
                     <div className=" text-white flex gap-2 items-center">

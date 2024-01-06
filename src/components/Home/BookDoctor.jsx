@@ -1,13 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Nav from '../Nav.jsx'
 import RadioButton from '../HTMLElements/RadioBtn.jsx'
 import { MdOutlineVideocam } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import { HiOutlineChat } from "react-icons/hi";
 import { HiOutlineCalendarDays } from "react-icons/hi2";
+import { getDoctorInfo } from '../../service/userService.js'
+import { useParams, Link } from "react-router-dom";
 
 
 const BookDoctor = () => {
+    const { id } = useParams()
+    const [doctorId, setDoctorId] = useState('')
+    const [doctorInfo, setDoctorInfo] = useState([])
+    useEffect(() => {
+        setDoctorId(id)
+
+    }, [])
+    useEffect(() => {
+        const fetchDoctorInfo = async () => {
+            let dataServer = await getDoctorInfo({ id: doctorId })
+            if (dataServer && dataServer.data && dataServer.data.EC === 0) {
+                setDoctorInfo(dataServer.data.DT)
+            }
+        }
+        fetchDoctorInfo(doctorId)
+    }, [doctorId])
+
+    console.log(doctorInfo)
     return (
         <>
             <Nav />
@@ -21,7 +41,7 @@ const BookDoctor = () => {
                         </div>
                         <div className="flex flex-col items-center gap-5 md:flex-row w-full justify-between md:my-6">
                             <div className="rounded-lg shadow-xl border flex flex-col gap-2 p-3 bg-white md:max-w-[50%]">
-                                <h3 className="text-xl font-semibold hidden md:block">Date</h3>
+                                <h3 className="text-xl font-semibold hidden md:block overflow-x-auto">Date</h3>
                                 <div className="flex items-center gap-2">
                                     <div className="cursor-pointer hover:duration-200 hover:scale-110 hover:bg-gray-200 p-3 rounded-xl">date</div>
                                     <div className="cursor-pointer scale-110 p-3 rounded-xl bg-primary-purple-500 text-white">date</div>
@@ -56,7 +76,7 @@ const BookDoctor = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="radio" className="md:hidden" />
+                                    <input type="radio" className="md:hidden" name='package' />
                                 </div>
                                 <div className="flex md:flex-col justify-between items-center gap-2 md:w-[1/3] md:min-w-[200px] lg:min-w-[300px] text-center rounded-xl p-3 hover:bg-gray-200 cursor-pointer md:hover:scale-105 md:hover:duration-200 shadow-xl border  ">
                                     {/* <div className="rounded-l-xl w-[5px] h-[100%] bg-red-200"></div> */}
@@ -71,7 +91,7 @@ const BookDoctor = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="radio" className="md:hidden" />
+                                    <input type="radio" className="md:hidden" name='package' />
                                 </div>
                                 <div className="flex md:flex-col justify-between items-center gap-2 md:w-[1/3] md:min-w-[200px] lg:min-w-[300px] text-center rounded-xl p-3 hover:bg-gray-200 cursor-pointer md:hover:scale-105 md:hover:duration-200 shadow-xl border  ">
                                     {/* <div className="rounded-l-xl w-[5px] h-[100%] bg-red-200"></div> */}
@@ -86,7 +106,7 @@ const BookDoctor = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="radio" className="md:hidden" />
+                                    <input type="radio" className="md:hidden" name='package' />
                                 </div>
                             </div>
                         </div>

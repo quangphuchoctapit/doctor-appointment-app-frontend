@@ -51,8 +51,8 @@ const SearchOverall = (props) => {
             <div className="flex gap-4 items-center justify-center w-full">
                 <input
                     onChange={handleSearch} value={queryRedux}
-                    type="text" className='p-3 w-full rounded-xl  bg-gray-100 text-black '
-                    placeholder='SearchOverall...' />
+                    type="text" className='p-3 w-full rounded-xl bg-gray-100 text-black '
+                    placeholder='Search something...' />
                 {
                     !closeSearch &&
                     <div onClick={handleCloseSearchResult} className="flex justify-center items-center rounded-full bg-red-500 text-white hover:duration-200 hover:bg-red-300 cursor-pointer w-7 h-6">X</div>
@@ -61,7 +61,7 @@ const SearchOverall = (props) => {
 
             </div>
             <ul className={!closeSearch ? ' flex flex-col gap-5 justify-center items-center shadow-xl rounded-xl absolute w-full max-h-96 overflow-y-auto bg-white' : 'hidden'}>
-                {resultsRedux.length > 0 && resultsRedux.map((result, index) => {
+                {resultsRedux?.length > 0 && resultsRedux.map((result, index) => {
                     return (
                         <li className='cursor-pointer p-3 w-full text-center hover:duration-200 hover:bg-gray-200 ' key={index}>
                             {result.name}

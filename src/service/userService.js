@@ -85,6 +85,9 @@ const editUserImage = async (data) => {
     return await axios.put('/api/v1/user/edit-img', data)
 }
 
+const getAllSchedule = async () => {
+    return await axios.get('/api/v1/get-all-schedule')
+}
 
 export {
     checkLogin, registerNewUser, getAllDoctors,
@@ -93,5 +96,5 @@ export {
     setUserRole, getUserRole, createClinic,
     updateClinic, createSpecialty, updateSpecialty,
     getAllSpecialties, getAllLocations, getDoctorInfo,
-    editUserImage
+    getAllSchedule, editUserImage
 }
